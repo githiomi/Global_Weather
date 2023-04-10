@@ -18,14 +18,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.squareup.picasso.Picasso;
 
+import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -96,7 +94,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public String getCityName (double longitude, double latitude){
+    public String getCityName(double longitude, double latitude) {
 
         String city = ""; // Default city name
 
@@ -105,23 +103,23 @@ public class MainActivity extends AppCompatActivity {
         try {
             List<Address> addresses = geocoder.getFromLocation(latitude, longitude, 5);
 
-            for (Address address : addresses){
-                if (address != null){
+            for (Address address : addresses) {
+                if (address != null) {
                     String cityName = address.getLocality();
-                    if (cityName != null){
+                    if (cityName != null) {
                         city = cityName;
-                    }else {
+                    } else {
                         Toast.makeText(this, "User City NOT found! Try Again.", Toast.LENGTH_SHORT).show();
                     }
                 }
             }
-            
-        }catch (Exception e){
-            
+
+        } catch (Exception e) {
+
             System.out.println("Could not find city. Defaulting to Port Louis");
             city = "Port Louis";
             e.printStackTrace();
-            
+
         }
 
         return city;
@@ -138,53 +136,63 @@ public class MainActivity extends AppCompatActivity {
         // Set city name TV to the town name
         town.setText(townName);
 
-        String APIUrl = "http://api.weatherapi.com/v1/forecast.json?key=" + R.string.weather_api_key + "q=" + townName.trim() + "&days=7&aqi=no&alerts=no";
+        String APIUrl = "http://api.weatherapi.com/v1/forecast.json?key=" + R.string.weather_api_key + "q=" + townName.trim() + "&days=6&aqi=no&alerts=no";
 
         // Request Queue
         RequestQueue queue = Volley.newRequestQueue(MainActivity.this);
 
-        JsonObjectRequest jsonRequest = new JsonObjectRequest(Request.Method.GET, APIUrl, null, new Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject response) {
-                // Clear arraylist of previous data
-                forecastItemList.clear();
+        JsonObjectRequest jsonRequest = new JsonObjectRequest(Request.Method.GET, APIUrl, null, response -> {
+            // Clear arraylist of previous data
+            forecastItemList.clear();
 
-                // Extract Data
-                try {
+            // Extract Data
+            try {
 
-                    String currentTime = response.getJSONObject("location").getString("localtime");
-                    String mainTemperature = response.getJSONObject("current").getString("temp_c");
-                    String condition = response.getJSONObject("current").getJSONObject("condition").getString("text");
-                    String iconUrl = response.getJSONObject("current").getJSONObject("condition").getString("icon");
-                    int windSpeed = response.getJSONObject("current").getInt("wind_kph");
-                    int humidityLevel = response.getJSONObject("current").getInt("humidity");
-                    int feelsLike = response.getJSONObject("current").getInt("feelslike_c");
+                // Current Weather Data
+                String currentTime = response.getJSONObject("location").getString("localtime");
+                String mainTemperature = response.getJSONObject("current").getString("temp_c");
+                String condition = response.getJSONObject("current").getJSONObject("condition").getString("text");
+                String iconUrl = response.getJSONObject("current").getJSONObject("condition").getString("icon");
+                int windSpeed = response.getJSONObject("current").getInt("wind_kph");
+                int humidityLevel = response.getJSONObject("current").getInt("humidity");
+                int feelsLike = response.getJSONObject("current").getInt("feelslike_c");
 
-                    // Add data to layout
-                    date.setText(getDate(currentTime));
-                    weatherType.setText(condition);
+                // Add data to layout
+                date.setText(getDate(currentTime));
+                weatherType.setText(condition);
 
-                    String fullTemp = mainTemperature + "°C";
-                    mainTemp.setText(fullTemp);
+                String fullTemp = mainTemperature + "°C";
+                mainTemp.setText(fullTemp);
 
-                    wind.setText(windSpeed);
-                    humidity.setText(humidityLevel);
-                    temp.setText(feelsLike);
+                wind.setText(windSpeed);
+                humidity.setText(humidityLevel);
+                temp.setText(feelsLike);
 
-                    // Add icon to layout
-                    String fullIconUrl = "https:" + iconUrl;
-                    Picasso.get().load(fullIconUrl).into(weatherImage);
+                // Add icon to layout
+                String fullIconUrl = "https:" + iconUrl;
+                Picasso.get().load(fullIconUrl).into(weatherImage);
 
-                } catch (JSONException e) {
-                    e.printStackTrace();
+                // Get Forecast Data
+                for (int i = 0; i < 6; i++) {
+
+                    String day = "Day " + i;
+
+                    JSONArray forecastDay = response.getJSONObject("forecast").getJSONArray("forecastday");
+                    String forecastIconUrl = forecastDay.getJSONObject(i).getJSONObject("day").getJSONObject("condition").getString("icon");
+                    String forecastCondition = forecastDay.getJSONObject(i).getJSONObject("day").getJSONObject("condition").getString("text");
+
+                    // Create new forecast items
+                    forecastItemList.add(new ForecastItem(day, forecastIconUrl, forecastCondition));
                 }
+
+                // Set up the adapter
+                forecastAdapter.notifyDataSetChanged();
+                setUpAdapter(forecastAdapter, forecastRecycler, forecastItemList, MainActivity.this);
+
+            } catch (JSONException e) {
+                e.printStackTrace();
             }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Toast.makeText(MainActivity.this, "Please enter a valid city name :)", Toast.LENGTH_SHORT).show();
-            }
-        });
+        }, error -> Toast.makeText(MainActivity.this, "Please enter a valid city name :)", Toast.LENGTH_SHORT).show());
 
         // Add request to queue
         queue.add(jsonRequest);
@@ -221,7 +229,7 @@ public class MainActivity extends AppCompatActivity {
     /**
      * To set up the adapter to the recycler view
      *
-     * @param adapter       the adapter to be used in the recycler view
+     * @param adapter  the adapter to be used in the recycler view
      * @param recyclerView  the recycler view to be used
      * @param forecastItems the list of items to be passed to the adapter
      * @param context       the context to init the adapter
