@@ -16,6 +16,17 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+import com.squareup.picasso.Picasso;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -42,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
 
     // Local variables
     String cityName;
+    List<ForecastItem> forecastItemList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -123,7 +135,59 @@ public class MainActivity extends AppCompatActivity {
      */
     public void getWeatherData(String townName) {
 
+        // Set city name TV to the town name
+        town.setText(townName);
+
         String APIUrl = "http://api.weatherapi.com/v1/forecast.json?key=" + R.string.weather_api_key + "q=" + townName.trim() + "&days=7&aqi=no&alerts=no";
+
+        // Request Queue
+        RequestQueue queue = Volley.newRequestQueue(MainActivity.this);
+
+        JsonObjectRequest jsonRequest = new JsonObjectRequest(Request.Method.GET, APIUrl, null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                // Clear arraylist of previous data
+                forecastItemList.clear();
+
+                // Extract Data
+                try {
+
+                    String currentTime = response.getJSONObject("location").getString("localtime");
+                    String mainTemperature = response.getJSONObject("current").getString("temp_c");
+                    String condition = response.getJSONObject("current").getJSONObject("condition").getString("text");
+                    String iconUrl = response.getJSONObject("current").getJSONObject("condition").getString("icon");
+                    int windSpeed = response.getJSONObject("current").getInt("wind_kph");
+                    int humidityLevel = response.getJSONObject("current").getInt("humidity");
+                    int feelsLike = response.getJSONObject("current").getInt("feelslike_c");
+
+                    // Add data to layout
+                    date.setText(getDate(currentTime));
+                    weatherType.setText(condition);
+
+                    String fullTemp = mainTemperature + "°C";
+                    mainTemp.setText(fullTemp);
+
+                    wind.setText(windSpeed);
+                    humidity.setText(humidityLevel);
+                    temp.setText(feelsLike);
+
+                    // Add icon to layout
+                    String fullIconUrl = "https:" + iconUrl;
+                    Picasso.get().load(fullIconUrl).into(weatherImage);
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(MainActivity.this, "Please enter a valid city name :)", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        // Add request to queue
+        queue.add(jsonRequest);
 
     }
 
