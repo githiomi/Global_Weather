@@ -8,11 +8,11 @@ An android project developed using Java that allows the user to find the current
 that they wish. It is a refresher course as I remind myself the android development best practices
 and methodologies.
 
-## Application Preview
+## 👀 Application Preview
 
 ![SCREENSHOT](app/src/main/res/drawable/app_screenshot.png)
 
-## Setup/Installation Minimal Requirements
+## ⏬ Setup/Installation Minimal Requirements
 
 You will need to have the following installed on your system for the application to run:
 
@@ -25,7 +25,7 @@ You will need to have the following installed on your system for the application
 Compatible with all Android Mobile devices with API 29 or higher.
 Further updates on the way.
 
-## Technologies Used
+## 🤖 Technologies Used
 
 It is made entirely using Android Studio where all the following files were created and modified to
 achieve the output as you see it.
@@ -36,7 +36,7 @@ achieve the output as you see it.
 * Picasso - Image Renderer
 * Volley - JSON Parser
 
-## Known Bugs
+## 🪲 Known Bugs
 
 No bugs to report at the moment! the system works efficiently at 100% guaranteed. Feel free to
 search the output on google to ensure that it coincides exactly.
@@ -45,7 +45,7 @@ search the output on google to ensure that it coincides exactly.
 
 > iOS implementations are in development using Flutter and Dart.
 
-## Setup Instructions
+## 🏗️ Setup Instructions
 
 In order to enjoy the features of this application you will need to:
 
@@ -56,7 +56,7 @@ In order to enjoy the features of this application you will need to:
 * Select the Shopping Assistant application icon.
 * Enjoy the Online Shopping Assistant mobile app.
 
-## Support and contact details
+## 📧 Support and contact details
 
 Contact me through any of the following:
 
