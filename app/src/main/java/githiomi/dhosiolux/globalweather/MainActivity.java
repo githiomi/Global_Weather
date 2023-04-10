@@ -1,5 +1,6 @@
 package githiomi.dhosiolux.globalweather;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.pm.PackageManager;
@@ -14,6 +15,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.Request;
@@ -75,11 +77,11 @@ public class MainActivity extends AppCompatActivity {
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 
         // Check for location permission
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
-                ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
+                ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
 
             // Request permission
-            ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION,
+            ActivityCompat.requestPermissions(MainActivity.this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION,
                     Manifest.permission.ACCESS_COARSE_LOCATION}, Constants.PERMISSION_CODE);
         }
 
@@ -141,7 +143,7 @@ public class MainActivity extends AppCompatActivity {
         // Request Queue
         RequestQueue queue = Volley.newRequestQueue(MainActivity.this);
 
-        JsonObjectRequest jsonRequest = new JsonObjectRequest(Request.Method.GET, APIUrl, null, response -> {
+        @SuppressLint("NotifyDataSetChanged") JsonObjectRequest jsonRequest = new JsonObjectRequest(Request.Method.GET, APIUrl, null, response -> {
             // Clear arraylist of previous data
             forecastItemList.clear();
 
@@ -241,6 +243,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Recycler view
         recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new GridLayoutManager(context, 5, GridLayoutManager.HORIZONTAL, false));
         recyclerView.setHasFixedSize(true);
 
     }
