@@ -22,6 +22,12 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
+    viewBinding {
+        // To enable
+        enabled = true
+    }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -50,5 +56,9 @@ dependencies {
 
     // GSON
     implementation 'com.google.code.gson:gson:2.10'
+
+    // Butter knife - For view binding
+    implementation 'com.jakewharton:butterknife:10.2.3'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:10.2.3'
 
 }

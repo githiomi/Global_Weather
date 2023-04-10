@@ -12,18 +12,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        BlurShadowImageView blurshadowimageview = (ImageView) findViewById(R.id.IV_weatherImage);
 
-//Sets Border Round Radius
-        blurshadowimageview.setRound((int) value);
 
-//Sets Image Resource
-        blurshadowimageview.setImageResource(ImgRes);
-
-//Sets Image Drawable
-        blurshadowimageview.setImageDrawable(drawable);
-
-//Sets Image Bitmap
-        blurshadowimageview.setImageBitmap(bitmap);
     }
 }
