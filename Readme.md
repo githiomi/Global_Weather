@@ -2,7 +2,7 @@
 
 > Developer: <a href="http://github.com/githiomi">Daniel Githiomi</a>
 
-## Description
+## 🚧 Description
 
 An android project developed using Java that allows the user to find the current weather of any town
 that they wish. It is a refresher course as I remind myself the android development best practices
@@ -20,7 +20,7 @@ You will need to have the following installed on your system for the application
 * 4GB RAM
 * Must be running Android API 29 or higher
 
-## Compatibility
+## ➕ Compatibility
 
 Compatible with all Android Mobile devices with API 29 or higher.
 Further updates on the way.
@@ -64,7 +64,7 @@ Contact me through any of the following:
 * Email: danielgithiomi@gmail.com
 * Github: githiomi
 
-## License
+## 📃 License
 
 Click the following to access the license
 page: [Click-Here](https://githiomi.github.io/Privacy-Policy/)
