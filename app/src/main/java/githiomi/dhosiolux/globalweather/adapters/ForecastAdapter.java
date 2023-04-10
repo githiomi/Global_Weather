@@ -42,13 +42,14 @@ public class ForecastAdapter extends RecyclerView.Adapter<ForecastAdapter.Foreca
         // Get the specific forecast item
         ForecastItem item = forecastItems.get(position);
 
+        // Populate the image
+        String imageUrl = "https:" + item.getIcon();
+        Picasso.get().load(imageUrl).into(holder.forecastIcon);
+
         // Populate the view
         String dayId = "Day " + item.getId();
         holder.forecastId.setText(dayId);
         holder.forecastTemp.setText(item.getForecast());
-
-        // Populate the image
-        Picasso.get().load(item.getIcon()).into(holder.forecastIcon);
 
     }
 
