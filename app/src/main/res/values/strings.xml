@@ -7,11 +7,14 @@
     <string name="weather_icon">Weather Icon</string>
     <string name="weather_type">Partly Cloudy</string>
     <string name="temperature">Temperature</string>
+    <string name="feels_like">Feels Like</string>
     <string name="main_temperature">32°C</string>
     <string name="wind">Wind</string>
     <string name="image">Image Input</string>
     <string name="wind_speed">32 Km/h</string>
     <string name="humidity">Humidity</string>
     <string name="humidity_percentage">70%</string>
+    
+    <string name="weather_api_key">3399dcea57904547b4f135747231004 </string>
 
 </resources>

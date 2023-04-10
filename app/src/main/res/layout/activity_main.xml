@@ -188,7 +188,7 @@
                             android:id="@+id/temperature"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="@string/temperature"
+                            android:text="@string/feels_like"
                             android:textAlignment="center"
                             android:textAllCaps="true"
                             android:textColor="@color/white"
