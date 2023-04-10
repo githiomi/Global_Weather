@@ -1,6 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content"
+    android:layout_margin="3dp"
+    android:background="@color/black"
+    android:padding="3dp">
+
+    <TextView
+        android:id="@+id/TV_forecastDay"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/day_tracker"
+        android:textAlignment="center"
+        android:textAllCaps="true"
+        android:textColor="@color/white"
+        android:textStyle="bold" />
+
+    <ImageView
+        android:id="@+id/IV_forecastIcon"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_below="@id/TV_forecastDay"
+        android:contentDescription="@string/image"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/weather_icon" />
+
+    <TextView
+        android:id="@+id/TV_forecastTemp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/IV_forecastIcon"
+        android:text="@string/main_temperature"
+        android:textAlignment="center"
+        android:textAllCaps="true"
+        android:textColor="@color/white"
+        android:textStyle="bold" />
 
 </RelativeLayout>
