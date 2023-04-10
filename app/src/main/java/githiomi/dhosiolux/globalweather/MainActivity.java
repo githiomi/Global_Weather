@@ -58,6 +58,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         // Binding set up
         ActivityMainBinding mainActivityBinding = ActivityMainBinding.inflate(getLayoutInflater());
         // Update set content view
