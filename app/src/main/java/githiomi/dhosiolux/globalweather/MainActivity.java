@@ -1,5 +1,7 @@
 package githiomi.dhosiolux.globalweather;
 
+import static android.content.ContentValues.TAG;
+
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -9,10 +11,13 @@ import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -58,12 +63,15 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         // Binding set up
         ActivityMainBinding mainActivityBinding = ActivityMainBinding.inflate(getLayoutInflater());
         // Update set content view
         setContentView(mainActivityBinding.getRoot());
 
+        // Full screen flags
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+
+        // Binding views
         date = mainActivityBinding.TVDate;
         town = mainActivityBinding.TVTownName;
         weatherImage = mainActivityBinding.IVWeatherImage;
@@ -74,27 +82,43 @@ public class MainActivity extends AppCompatActivity {
         temp = mainActivityBinding.TVTemperature;
         forecastRecycler = mainActivityBinding.RVForecastView;
 
-        // Init the location manager
-        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-
-        // Check for location permission
-        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
-                ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-
-            // Request permission
-            ActivityCompat.requestPermissions(MainActivity.this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION,
-                    Manifest.permission.ACCESS_COARSE_LOCATION}, Constants.PERMISSION_CODE);
-        }
-
-        // But if location is available
-        Location currentLocation = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-
-        // Get current city name
-        cityName = getCityName(currentLocation.getLongitude(), currentLocation.getLatitude());
+//        // Init the location manager
+//        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+//
+//        // Check for location permission
+//        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
+//                ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+//
+//            // Request permission
+//            ActivityCompat.requestPermissions(MainActivity.this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION,
+//                    Manifest.permission.ACCESS_COARSE_LOCATION}, Constants.PERMISSION_CODE);
+//        }
+//
+//        // But if location is available
+//        Location currentLocation = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+//
+//        // Get current city name
+//        cityName = getCityName(currentLocation.getLongitude(), currentLocation.getLatitude());
 
         // Use the city name to get weather information
-        getWeatherData(cityName);
+        getWeatherData("Port Louis");
 
+    }
+
+    // To check if permission is granted
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        if (requestCode == Constants.PERMISSION_CODE){
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                Toast.makeText(this, "Permissions Granted...", Toast.LENGTH_SHORT).show();
+                Log.d(TAG, "onRequestPermissionsResult: Permissions Granted");
+            }else {
+                Toast.makeText(this, "Permissions Not Granted...", Toast.LENGTH_SHORT).show();
+                Log.d(TAG, "onRequestPermissionsResult: Permissions Not Granted");
+            }
+        }
     }
 
     public String getCityName(double longitude, double latitude) {
@@ -104,7 +128,7 @@ public class MainActivity extends AppCompatActivity {
         Geocoder geocoder = new Geocoder(getBaseContext(), Locale.getDefault());
 
         try {
-            List<Address> addresses = geocoder.getFromLocation(latitude, longitude, 5);
+            List<Address> addresses = geocoder.getFromLocation(latitude, longitude, 3);
 
             for (Address address : addresses) {
                 if (address != null) {
@@ -119,7 +143,7 @@ public class MainActivity extends AppCompatActivity {
 
         } catch (Exception e) {
 
-            System.out.println("Could not find city. Defaulting to Port Louis");
+            System.out.println("Could not find your city. Defaulting to Port Louis");
             city = "Port Louis";
             e.printStackTrace();
 
@@ -139,12 +163,12 @@ public class MainActivity extends AppCompatActivity {
         // Set city name TV to the town name
         town.setText(townName);
 
-        String APIUrl = "http://api.weatherapi.com/v1/forecast.json?key=" + R.string.weather_api_key + "q=" + townName.trim() + "&days=6&aqi=no&alerts=no";
+        String APIUrl = "http://api.weatherapi.com/v1/forecast.json?key=" + Constants.API_KEY + "q=" + townName.trim() + "&days=6&aqi=no&alerts=no";
 
         // Request Queue
         RequestQueue queue = Volley.newRequestQueue(MainActivity.this);
 
-        @SuppressLint("NotifyDataSetChanged") JsonObjectRequest jsonRequest = new JsonObjectRequest(Request.Method.GET, APIUrl, null, response -> {
+        JsonObjectRequest jsonRequest = new JsonObjectRequest(Request.Method.GET, APIUrl, null, response -> {
             // Clear arraylist of previous data
             forecastItemList.clear();
 
@@ -184,13 +208,13 @@ public class MainActivity extends AppCompatActivity {
                     String forecastIconUrl = forecastDay.getJSONObject(i).getJSONObject("day").getJSONObject("condition").getString("icon");
                     String forecastCondition = forecastDay.getJSONObject(i).getJSONObject("day").getJSONObject("condition").getString("text");
 
+                    Log.d(TAG, "getWeatherData: " + day + " " + forecastIconUrl + " " + forecastCondition);
                     // Create new forecast items
                     forecastItemList.add(new ForecastItem(day, forecastIconUrl, forecastCondition));
                 }
 
                 // Set up the adapter
-                forecastAdapter.notifyDataSetChanged();
-                setUpAdapter(forecastAdapter, forecastRecycler, forecastItemList, MainActivity.this);
+                setUpAdapter(forecastRecycler, forecastItemList, MainActivity.this);
 
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -232,15 +256,14 @@ public class MainActivity extends AppCompatActivity {
     /**
      * To set up the adapter to the recycler view
      *
-     * @param adapter  the adapter to be used in the recycler view
      * @param recyclerView  the recycler view to be used
      * @param forecastItems the list of items to be passed to the adapter
      * @param context       the context to init the adapter
      */
-    private static void setUpAdapter(ForecastAdapter adapter, RecyclerView recyclerView, List<ForecastItem> forecastItems, Context context) {
+    private static void setUpAdapter(RecyclerView recyclerView, List<ForecastItem> forecastItems, Context context) {
 
         // Init the adapter
-        adapter = new ForecastAdapter(forecastItems, context);
+        ForecastAdapter adapter = new ForecastAdapter(forecastItems, context);
 
         // Recycler view
         recyclerView.setAdapter(adapter);
