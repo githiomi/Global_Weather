@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/black"
+    android:background="@drawable/night_sky"
+    android:id="@+id/RL_Background"
     tools:context=".MainActivity">
 
     <!-- Card View -->
@@ -12,15 +13,14 @@
         android:id="@+id/mainCardView"
         android:layout_width="match_parent"
         android:layout_height="600dp"
-        android:layout_margin="5dp"
-        app:cardBackgroundColor="@color/main_blue"
-        app:cardCornerRadius="30dp"
-        app:cardElevation="20dp">
+        android:layout_marginTop="20dp"
+        app:cardCornerRadius="15dp"
+        app:cardBackgroundColor="@color/transparent"
+        app:cardElevation="15dp">
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_margin="10dp"
             android:padding="10dp">
 
             <TextView
@@ -31,7 +31,7 @@
                 android:textAlignment="center"
                 android:textAllCaps="true"
                 android:textColor="@color/white"
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="50dp"
                 android:textSize="13sp" />
 
             <TextView
@@ -88,8 +88,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/TV_mainTemperature"
-                android:layout_marginTop="30dp"
+                android:layout_margin="30dp"
                 app:cardBackgroundColor="@color/raisin_black"
+                app:cardElevation="10dp"
                 app:cardCornerRadius="30dp">
 
                 <LinearLayout
@@ -97,13 +98,14 @@
                     android:layout_height="wrap_content"
                     android:baselineAligned="false"
                     android:orientation="horizontal"
-                    android:weightSum="300">
+                    android:layout_margin="5dp"
+                    android:weightSum="3">
 
                     <RelativeLayout
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="100"
-                        android:padding="10dp">
+                        android:layout_weight="1"
+                        android:padding="5dp">
 
                         <TextView
                             android:id="@+id/wind"
@@ -117,7 +119,7 @@
 
                         <ImageView
                             android:id="@+id/windImage"
-                            android:layout_width="match_parent"
+                            android:layout_width="wrap_content"
                             android:layout_height="60dp"
                             android:layout_below="@id/wind"
                             android:contentDescription="@string/image"
@@ -142,8 +144,8 @@
                     <RelativeLayout
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="100"
-                        android:padding="10dp">
+                        android:layout_weight="1"
+                        android:padding="5dp">
 
                         <TextView
                             android:id="@+id/humidity"
@@ -182,8 +184,8 @@
                     <RelativeLayout
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="100"
-                        android:padding="10dp">
+                        android:layout_weight="1"
+                        android:padding="5dp">
 
                         <TextView
                             android:id="@+id/temperature"
@@ -233,7 +235,9 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/mainCardView"
-        android:padding="8dp" >
+        android:background="@color/raisin_black"
+        android:layout_marginTop="10dp"
+        android:padding="10dp" >
 
         <!-- Forecasting goes here -->
 
