@@ -14,8 +14,6 @@
     <string name="wind_speed">32 Km/h</string>
     <string name="humidity">Humidity</string>
     <string name="humidity_percentage">70%</string>
-    
-    <string name="weather_api_key">3399dcea57904547b4f135747231004</string>
     <string name="day_tracker">Day X</string>
 
 </resources>

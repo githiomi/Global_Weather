@@ -163,8 +163,7 @@ public class MainActivity extends AppCompatActivity {
         // Set city name TV to the town name
         town.setText(townName);
 
-//        String APIUrl = "http://api.weatherapi.com/v1/forecast.json?key=" + Constants.API_KEY + "q=" + townName.trim() + "&days=6&aqi=no&alerts=no";
-        String APIUrl = "http://api.weatherapi.com/v1/forecast.json?key=3399dcea57904547b4f135747231004&q=port louis&days=5&aqi=no&alerts=no";
+        String APIUrl = "http://api.weatherapi.com/v1/forecast.json?key=" + Constants.API_KEY + "q=" + townName.trim() + "&days=6&aqi=no&alerts=no";
 
         // Request Queue
         RequestQueue queue = Volley.newRequestQueue(MainActivity.this);
