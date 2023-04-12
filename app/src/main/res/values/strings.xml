@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Global Weather</string>
+    <string name="app_name">Sky Sight</string>
 
     <!-- Added Strings -->
     <string name="date_today">Day Month Date, Year</string>
@@ -14,6 +14,6 @@
     <string name="humidity">Humidity</string>
     <string name="humidity_percentage">0%</string>
     <string name="day_tracker">Day X</string>
-    <string name="data_fetch">Fetching data. Please wait...</string>
+    <string name="data_fetch">Fetching data. Please wait…</string>
 
 </resources>

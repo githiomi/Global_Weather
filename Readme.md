@@ -1,4 +1,4 @@
-# GLOBAL WEATHER
+# SKY SIGHT
 
 > Developer: <a href="http://github.com/githiomi">Daniel Githiomi</a>
 
@@ -49,7 +49,7 @@ search the output on google to ensure that it coincides exactly.
 
 In order to enjoy the features of this application you will need to:
 
-* Git clone [this](https://github.com/githiomi/Global-Weather) into your terminal to your
+* Git clone [this](https://github.com/githiomi/Sky_Sight) into your terminal to your
   desired directory.
 * Connect a physical or run a virtual device (API 33 or higher)
 * Install the application on your device of choice
