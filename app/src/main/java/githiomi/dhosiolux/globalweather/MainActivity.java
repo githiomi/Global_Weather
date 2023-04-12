@@ -189,9 +189,9 @@ public class MainActivity extends AppCompatActivity {
                 String mainTemperature = response.getJSONObject("current").getString("temp_c");
                 String condition = response.getJSONObject("current").getJSONObject("condition").getString("text");
                 String iconUrl = response.getJSONObject("current").getJSONObject("condition").getString("icon");
-                String windSpeed = Integer.toString(response.getJSONObject("current").getInt("wind_kph"))  + "km/h";
-                String humidityLevel = Integer.toString(response.getJSONObject("current").getInt("humidity")) + "%";
-                String feelsLike = Integer.toString(response.getJSONObject("current").getInt("feelslike_c")) + "°C";
+                String windSpeed = response.getJSONObject("current").getInt("wind_kph") + "km/h";
+                String humidityLevel = response.getJSONObject("current").getInt("humidity") + "%";
+                String feelsLike = response.getJSONObject("current").getInt("feelslike_c") + "°C";
 
                 // Load background image based on day/night
                 int isDay = response.getJSONObject("current").getInt("is_day");
@@ -224,7 +224,7 @@ public class MainActivity extends AppCompatActivity {
 
                     JSONArray forecastDay = response.getJSONObject("forecast").getJSONArray("forecastday");
                     String forecastIconUrl = forecastDay.getJSONObject(i).getJSONObject("day").getJSONObject("condition").getString("icon");
-                    String forecastTemp = Integer.toString(forecastDay.getJSONObject(i).getJSONObject("day").getInt("avgtemp_c")) + "°C";
+                    String forecastTemp = forecastDay.getJSONObject(i).getJSONObject("day").getInt("avgtemp_c") + "°C";
 
                     // Create new forecast items
                     forecastItemList.add(new ForecastItem(day, forecastIconUrl, forecastTemp));
@@ -237,11 +237,7 @@ public class MainActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
 
-        }, error -> {
-
-            Toast.makeText(MainActivity.this, "Could not fetch data. Check your internet connection", Toast.LENGTH_SHORT).show();
-
-        });
+        }, error -> Toast.makeText(MainActivity.this, "Could not fetch data. Check your internet connection", Toast.LENGTH_SHORT).show());
 
         // Add request to queue
         queue.add(jsonRequest);
