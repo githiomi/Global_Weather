@@ -35,6 +35,7 @@ import org.json.JSONException;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -182,7 +183,7 @@ public class MainActivity extends AppCompatActivity {
             Log.d(TAG, "getWeatherData: URL " + APIUrl);
 
             // Clear arraylist of previous data
-            forecastItemList.clear();
+            forecastItemList = new ArrayList<>();
 
             // Load background image based on day/night
             try {
@@ -206,9 +207,9 @@ public class MainActivity extends AppCompatActivity {
                 String mainTemperature = response.getJSONObject("current").getString("temp_c");
                 String condition = response.getJSONObject("current").getJSONObject("condition").getString("text");
                 String iconUrl = response.getJSONObject("current").getJSONObject("condition").getString("icon");
-                int windSpeed = response.getJSONObject("current").getInt("wind_kph");
-                int humidityLevel = response.getJSONObject("current").getInt("humidity");
-                int feelsLike = response.getJSONObject("current").getInt("feelslike_c");
+                String windSpeed = Integer.toString(response.getJSONObject("current").getInt("wind_kph"))  + "km/h";
+                String humidityLevel = Integer.toString(response.getJSONObject("current").getInt("humidity")) + "%";
+                String feelsLike = Integer.toString(response.getJSONObject("current").getInt("feelslike_c")) + "°C";
 
                 // Add data to layout
                 date.setText(getDate(currentTime));
