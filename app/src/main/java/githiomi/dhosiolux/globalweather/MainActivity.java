@@ -101,7 +101,7 @@ public class MainActivity extends AppCompatActivity {
         cityName = getCityName(currentLocation.getLongitude(), currentLocation.getLatitude());
 
         // Use the city name to get weather information
-        getWeatherData("Pereybere");
+        getWeatherData(cityName);
 
     }
 
@@ -121,6 +121,12 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Called to get the name of the city that will then be used to call the API
+     * @param longitude the longitude of the city
+     * @param latitude the latitude of the city
+     * @return the string name of the city
+     */
     public String getCityName(double longitude, double latitude) {
 
         String city = ""; // Default city name
@@ -150,7 +156,6 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return city;
-
     }
 
     /**
