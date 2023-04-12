@@ -19,23 +19,12 @@ public class ForecastItem {
         return id;
     }
 
-    public void setId(String id) {
-        this.id = id;
-    }
-
     public String getIcon() {
         return icon;
-    }
-
-    public void setIcon(String icon) {
-        this.icon = icon;
     }
 
     public String getForecast() {
         return forecast;
     }
 
-    public void setForecast(String forecast) {
-        this.forecast = forecast;
-    }
 }

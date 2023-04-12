@@ -52,8 +52,4 @@ dependencies {
     // Volley - JSON parser - https://www.geeksforgeeks.org/volley-library-in-android/?ref=lbp
     implementation 'com.android.volley:volley:1.2.1'
 
-    // Retrofit - HTTP client - https://square.github.io/retrofit/
-    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
-    implementation 'com.squareup.retrofit2:converter-gson:2.0.2'
-
 }

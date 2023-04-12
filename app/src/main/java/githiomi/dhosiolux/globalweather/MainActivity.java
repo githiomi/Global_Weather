@@ -177,7 +177,7 @@ public class MainActivity extends AppCompatActivity {
         // Set city name TV to the town name
         town.setText(townName);
 
-        String APIUrl = "https://api.weatherapi.com/v1/forecast.json?key=3399dcea57904547b4f135747231004%20&q=" + townName.trim() + "&days=6&aqi=no&alerts=no";
+        String APIUrl = "https://api.weatherapi.com/v1/forecast.json?key=" + Constants.API_KEY +"%20&q=" + townName.trim() + "&days=6&aqi=no&alerts=no";
 
         // Request Queue
         RequestQueue queue = Volley.newRequestQueue(MainActivity.this);
@@ -247,7 +247,13 @@ public class MainActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
 
-        }, error -> Toast.makeText(MainActivity.this, "Could not fetch data. Check your internet connection", Toast.LENGTH_SHORT).show());
+        }, error -> {
+
+            toggleView();
+
+            Toast.makeText(MainActivity.this, "Could not fetch data. Check your internet connection", Toast.LENGTH_SHORT).show();
+
+        });
 
         // Add request to queue
         queue.add(jsonRequest);
