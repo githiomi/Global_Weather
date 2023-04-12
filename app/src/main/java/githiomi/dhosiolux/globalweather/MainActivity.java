@@ -169,7 +169,7 @@ public class MainActivity extends AppCompatActivity {
         // Set city name TV to the town name
         town.setText(townName);
 
-        String APIUrl = "https://api.weatherapi.com/v1/forecast.json?key=3399dcea57904547b4f135747231004%20&q=" + townName.trim() + "&days=5&aqi=no&alerts=no";
+        String APIUrl = "https://api.weatherapi.com/v1/forecast.json?key=3399dcea57904547b4f135747231004%20&q=" + townName.trim() + "&days=6&aqi=no&alerts=no";
 
         // Request Queue
         RequestQueue queue = Volley.newRequestQueue(MainActivity.this);
@@ -185,20 +185,6 @@ public class MainActivity extends AppCompatActivity {
             // Clear arraylist of previous data
             forecastItemList = new ArrayList<>();
 
-            // Load background image based on day/night
-            try {
-                int isDay = response.getJSONObject("current").getInt("is_day");
-
-                if (isDay == 1) {
-                    relativeLayout.setBackgroundResource(R.drawable.day_sky);
-                } else {
-                    relativeLayout.setBackgroundResource(R.drawable.night_sky);
-                }
-
-            } catch (JSONException e) {
-                throw new RuntimeException(e);
-            }
-
             // Extract Data
             try {
 
@@ -210,6 +196,15 @@ public class MainActivity extends AppCompatActivity {
                 String windSpeed = Integer.toString(response.getJSONObject("current").getInt("wind_kph"))  + "km/h";
                 String humidityLevel = Integer.toString(response.getJSONObject("current").getInt("humidity")) + "%";
                 String feelsLike = Integer.toString(response.getJSONObject("current").getInt("feelslike_c")) + "°C";
+
+                // Load background image based on day/night
+                int isDay = response.getJSONObject("current").getInt("is_day");
+
+                if (isDay == 0) {
+                    relativeLayout.setBackgroundResource(R.drawable.day_sky);
+                } else {
+                    relativeLayout.setBackgroundResource(R.drawable.night_sky);
+                }
 
                 // Add data to layout
                 date.setText(getDate(currentTime));
@@ -229,19 +224,26 @@ public class MainActivity extends AppCompatActivity {
                 // Get Forecast Data
                 for (int i = 0; i < 6; i++) {
 
-                    String day = "Day " + i;
+                    String day = "Day " + (i + 1);
 
                     JSONArray forecastDay = response.getJSONObject("forecast").getJSONArray("forecastday");
                     String forecastIconUrl = forecastDay.getJSONObject(i).getJSONObject("day").getJSONObject("condition").getString("icon");
-                    String forecastCondition = forecastDay.getJSONObject(i).getJSONObject("day").getJSONObject("condition").getString("text");
+                    String forecastTemp = Integer.toString(forecastDay.getJSONObject(i).getJSONObject("day").getInt("avgtemp_c")) + "°C";
 
-                    Log.d(TAG, "getWeatherData: " + day + " " + forecastIconUrl + " " + forecastCondition);
+                    Log.d(TAG, "getWeatherData: " + day + " " + forecastIconUrl + " " + forecastTemp);
                     // Create new forecast items
-                    forecastItemList.add(new ForecastItem(day, forecastIconUrl, forecastCondition));
+                    forecastItemList.add(new ForecastItem(day, forecastIconUrl, forecastTemp));
                 }
 
-                // Set up the adapter
-                setUpAdapter(forecastRecycler, forecastItemList, MainActivity.this);
+                Log.d(TAG, "getWeatherData: Forecast List Items " + forecastItemList);
+
+                // Init the adapter
+                ForecastAdapter adapter = new ForecastAdapter(forecastItemList, MainActivity.this);
+
+                // Recycler view
+                forecastRecycler.setAdapter(adapter);
+                forecastRecycler.setLayoutManager(new GridLayoutManager(MainActivity.this, 5, GridLayoutManager.HORIZONTAL, false));
+                forecastRecycler.setHasFixedSize(true);
 
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -295,13 +297,9 @@ public class MainActivity extends AppCompatActivity {
      */
     private static void setUpAdapter(RecyclerView recyclerView, List<ForecastItem> forecastItems, Context context) {
 
-        // Init the adapter
-        ForecastAdapter adapter = new ForecastAdapter(forecastItems, context);
 
-        // Recycler view
-        recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new GridLayoutManager(context, 5, GridLayoutManager.HORIZONTAL, false));
-        recyclerView.setHasFixedSize(true);
+
+
 
     }
 

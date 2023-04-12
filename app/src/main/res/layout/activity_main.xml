@@ -2,10 +2,10 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/RL_Background"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/night_sky"
-    android:id="@+id/RL_Background"
     tools:context=".MainActivity">
 
     <!-- Card View -->
@@ -14,8 +14,8 @@
         android:layout_width="match_parent"
         android:layout_height="600dp"
         android:layout_marginTop="10dp"
-        app:cardCornerRadius="15dp"
         app:cardBackgroundColor="@color/transparent"
+        app:cardCornerRadius="15dp"
         app:cardElevation="15dp">
 
         <RelativeLayout
@@ -27,11 +27,11 @@
                 android:id="@+id/TV_date"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
                 android:text="@string/date_today"
                 android:textAlignment="center"
                 android:textAllCaps="true"
                 android:textColor="@color/white"
-                android:layout_marginTop="30dp"
                 android:textSize="13sp" />
 
             <TextView
@@ -57,7 +57,7 @@
                 android:adjustViewBounds="true"
                 android:background="@color/transparent"
                 android:contentDescription="@string/image"
-                android:scaleType="centerInside"
+                android:scaleType="fitCenter"
                 android:src="@drawable/weather_icon" />
 
             <TextView
@@ -74,13 +74,14 @@
 
             <TextView
                 android:id="@+id/TV_mainTemperature"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/TV_weatherType"
+                android:layout_centerHorizontal="true"
                 android:text="@string/main_temperature"
                 android:textAlignment="center"
                 android:textColor="@color/white"
-                android:textSize="70sp"
+                android:textSize="50sp"
                 android:textStyle="bold" />
 
             <androidx.cardview.widget.CardView
@@ -90,15 +91,15 @@
                 android:layout_below="@id/TV_mainTemperature"
                 android:layout_margin="30dp"
                 app:cardBackgroundColor="@color/raisin_black"
-                app:cardElevation="10dp"
-                app:cardCornerRadius="30dp">
+                app:cardCornerRadius="30dp"
+                app:cardElevation="10dp">
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
                     android:baselineAligned="false"
                     android:orientation="horizontal"
-                    android:layout_margin="5dp"
                     android:weightSum="3">
 
                     <RelativeLayout
@@ -135,7 +136,6 @@
                             android:layout_below="@id/windImage"
                             android:text="@string/wind_speed"
                             android:textAlignment="center"
-                            android:textAllCaps="true"
                             android:textColor="@color/white"
                             android:textSize="12sp" />
 
@@ -235,9 +235,9 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/mainCardView"
-        android:background="@color/raisin_black"
         android:layout_marginTop="10dp"
-        android:padding="10dp" >
+        android:background="@color/raisin_black"
+        android:padding="10dp">
 
         <!-- Forecasting goes here -->
 
