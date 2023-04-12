@@ -12,7 +12,7 @@
     <androidx.cardview.widget.CardView
         android:id="@+id/mainCardView"
         android:layout_width="match_parent"
-        android:layout_height="600dp"
+        android:layout_height="550dp"
         android:layout_marginTop="10dp"
         app:cardBackgroundColor="@color/transparent"
         app:cardCornerRadius="15dp"
@@ -89,7 +89,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/TV_mainTemperature"
-                android:layout_margin="30dp"
+                android:layout_margin="20dp"
                 app:cardBackgroundColor="@color/raisin_black"
                 app:cardCornerRadius="30dp"
                 app:cardElevation="10dp">
@@ -236,7 +236,7 @@
         android:layout_height="match_parent"
         android:layout_below="@id/mainCardView"
         android:layout_marginTop="10dp"
-        android:background="@color/raisin_black"
+        android:background="@color/black"
         android:padding="10dp">
 
         <!-- Forecasting goes here -->
