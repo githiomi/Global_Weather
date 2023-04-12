@@ -99,10 +99,10 @@ public class MainActivity extends AppCompatActivity {
         Location currentLocation = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
 
         // Get current city name
-//        cityName = getCityName(currentLocation.getLongitude(), currentLocation.getLatitude());
+        cityName = getCityName(currentLocation.getLongitude(), currentLocation.getLatitude());
 
         // Use the city name to get weather information
-        getWeatherData("Nairobi");
+        getWeatherData(cityName);
 
     }
 
