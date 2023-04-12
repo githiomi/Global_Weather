@@ -2,18 +2,17 @@
     <string name="app_name">Global Weather</string>
 
     <!-- Added Strings -->
-    <string name="date_today">Monday Apr 10, 2023</string>
+    <string name="date_today">Day Month Date, Year</string>
     <string name="town_name">Town Name</string>
-    <string name="weather_icon">Weather Icon</string>
-    <string name="weather_type">Partly Cloudy</string>
+    <string name="weather_type">Weather Condition</string>
     <string name="temperature">Temperature</string>
     <string name="feels_like">Feels Like</string>
-    <string name="main_temperature">32°C</string>
+    <string name="main_temperature">0°C</string>
     <string name="wind">Wind</string>
     <string name="image">Image Input</string>
-    <string name="wind_speed">32 Km/h</string>
+    <string name="wind_speed">0 Km/h</string>
     <string name="humidity">Humidity</string>
-    <string name="humidity_percentage">70%</string>
+    <string name="humidity_percentage">0%</string>
     <string name="day_tracker">Day X</string>
 
 </resources>

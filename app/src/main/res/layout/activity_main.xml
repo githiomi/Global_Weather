@@ -13,7 +13,7 @@
         android:id="@+id/mainCardView"
         android:layout_width="match_parent"
         android:layout_height="600dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         app:cardCornerRadius="15dp"
         app:cardBackgroundColor="@color/transparent"
         app:cardElevation="15dp">
@@ -21,7 +21,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:padding="10dp">
+            android:padding="5dp">
 
             <TextView
                 android:id="@+id/TV_date"
@@ -31,7 +31,7 @@
                 android:textAlignment="center"
                 android:textAllCaps="true"
                 android:textColor="@color/white"
-                android:layout_marginTop="50dp"
+                android:layout_marginTop="30dp"
                 android:textSize="13sp" />
 
             <TextView
@@ -56,7 +56,7 @@
                 android:layout_marginTop="10dp"
                 android:adjustViewBounds="true"
                 android:background="@color/transparent"
-                android:contentDescription="@string/weather_icon"
+                android:contentDescription="@string/image"
                 android:scaleType="centerInside"
                 android:src="@drawable/weather_icon" />
 

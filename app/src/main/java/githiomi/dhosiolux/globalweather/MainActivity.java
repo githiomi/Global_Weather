@@ -98,10 +98,10 @@ public class MainActivity extends AppCompatActivity {
         Location currentLocation = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
 
         // Get current city name
-        cityName = getCityName(currentLocation.getLongitude(), currentLocation.getLatitude());
+//        cityName = getCityName(currentLocation.getLongitude(), currentLocation.getLatitude());
 
         // Use the city name to get weather information
-        getWeatherData(cityName);
+        getWeatherData("Pereybere");
 
     }
 
@@ -168,16 +168,83 @@ public class MainActivity extends AppCompatActivity {
         // Set city name TV to the town name
         town.setText(townName);
 
-        String APIUrl = "http://api.weatherapi.com/v1/forecast.json?key=" + Constants.API_KEY + "q=" + townName.trim() + "&days=6&aqi=no&alerts=no";
+        String APIUrl = "https://api.weatherapi.com/v1/forecast.json?key=3399dcea57904547b4f135747231004%20&q=" + townName.trim() + "&days=5&aqi=no&alerts=no";
 
         // Request Queue
         RequestQueue queue = Volley.newRequestQueue(MainActivity.this);
+
+        Log.d(TAG, "getWeatherData: URL " + APIUrl);
 
         JsonObjectRequest jsonRequest = new JsonObjectRequest(Request.Method.GET, APIUrl, null, response -> {
 
             Toast.makeText(MainActivity.this, "Fetched data", Toast.LENGTH_SHORT).show();
             Log.d(TAG, "getWeatherData: DATA --- " + response.toString());
             Log.d(TAG, "getWeatherData: URL " + APIUrl);
+
+            // Clear arraylist of previous data
+            forecastItemList.clear();
+
+            // Load background image based on day/night
+            try {
+                int isDay = response.getJSONObject("current").getInt("is_day");
+
+                if (isDay == 1) {
+                    relativeLayout.setBackgroundResource(R.drawable.day_sky);
+                } else {
+                    relativeLayout.setBackgroundResource(R.drawable.night_sky);
+                }
+
+            } catch (JSONException e) {
+                throw new RuntimeException(e);
+            }
+
+            // Extract Data
+            try {
+
+                // Current Weather Data
+                String currentTime = response.getJSONObject("location").getString("localtime");
+                String mainTemperature = response.getJSONObject("current").getString("temp_c");
+                String condition = response.getJSONObject("current").getJSONObject("condition").getString("text");
+                String iconUrl = response.getJSONObject("current").getJSONObject("condition").getString("icon");
+                int windSpeed = response.getJSONObject("current").getInt("wind_kph");
+                int humidityLevel = response.getJSONObject("current").getInt("humidity");
+                int feelsLike = response.getJSONObject("current").getInt("feelslike_c");
+
+                // Add data to layout
+                date.setText(getDate(currentTime));
+                weatherType.setText(condition);
+
+                String fullTemp = mainTemperature + "°C";
+                mainTemp.setText(fullTemp);
+
+                wind.setText(windSpeed);
+                humidity.setText(humidityLevel);
+                temp.setText(feelsLike);
+
+                // Add icon to layout
+                String fullIconUrl = "https:" + iconUrl;
+                Picasso.get().load(fullIconUrl).into(weatherImage);
+
+                // Get Forecast Data
+                for (int i = 0; i < 6; i++) {
+
+                    String day = "Day " + i;
+
+                    JSONArray forecastDay = response.getJSONObject("forecast").getJSONArray("forecastday");
+                    String forecastIconUrl = forecastDay.getJSONObject(i).getJSONObject("day").getJSONObject("condition").getString("icon");
+                    String forecastCondition = forecastDay.getJSONObject(i).getJSONObject("day").getJSONObject("condition").getString("text");
+
+                    Log.d(TAG, "getWeatherData: " + day + " " + forecastIconUrl + " " + forecastCondition);
+                    // Create new forecast items
+                    forecastItemList.add(new ForecastItem(day, forecastIconUrl, forecastCondition));
+                }
+
+                // Set up the adapter
+                setUpAdapter(forecastRecycler, forecastItemList, MainActivity.this);
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
 
         }, error -> {
 
@@ -237,68 +304,4 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-//    // Clear arraylist of previous data
-//            forecastItemList.clear();
-//
-//    // Load background image based on day/night
-//            try {
-//        int isDay = response.getJSONObject("current").getInt("is_day");
-//
-//        if (isDay == 1) {
-//            relativeLayout.setBackgroundResource(R.drawable.day_sky);
-//        } else {
-//            relativeLayout.setBackgroundResource(R.drawable.night_sky);
-//        }
-//
-//    } catch (JSONException e) {
-//        throw new RuntimeException(e);
-//    }
-//
-//    // Extract Data
-//            try {
-//
-//        // Current Weather Data
-//        String currentTime = response.getJSONObject("location").getString("localtime");
-//        String mainTemperature = response.getJSONObject("current").getString("temp_c");
-//        String condition = response.getJSONObject("current").getJSONObject("condition").getString("text");
-//        String iconUrl = response.getJSONObject("current").getJSONObject("condition").getString("icon");
-//        int windSpeed = response.getJSONObject("current").getInt("wind_kph");
-//        int humidityLevel = response.getJSONObject("current").getInt("humidity");
-//        int feelsLike = response.getJSONObject("current").getInt("feelslike_c");
-//
-//        // Add data to layout
-//        date.setText(getDate(currentTime));
-//        weatherType.setText(condition);
-//
-//        String fullTemp = mainTemperature + "°C";
-//        mainTemp.setText(fullTemp);
-//
-//        wind.setText(windSpeed);
-//        humidity.setText(humidityLevel);
-//        temp.setText(feelsLike);
-//
-//        // Add icon to layout
-//        String fullIconUrl = "https:" + iconUrl;
-//        Picasso.get().load(fullIconUrl).into(weatherImage);
-//
-//        // Get Forecast Data
-//        for (int i = 0; i < 6; i++) {
-//
-//            String day = "Day " + i;
-//
-//            JSONArray forecastDay = response.getJSONObject("forecast").getJSONArray("forecastday");
-//            String forecastIconUrl = forecastDay.getJSONObject(i).getJSONObject("day").getJSONObject("condition").getString("icon");
-//            String forecastCondition = forecastDay.getJSONObject(i).getJSONObject("day").getJSONObject("condition").getString("text");
-//
-//            Log.d(TAG, "getWeatherData: " + day + " " + forecastIconUrl + " " + forecastCondition);
-//            // Create new forecast items
-//            forecastItemList.add(new ForecastItem(day, forecastIconUrl, forecastCondition));
-//        }
-//
-//        // Set up the adapter
-//        setUpAdapter(forecastRecycler, forecastItemList, MainActivity.this);
-//
-//    } catch (JSONException e) {
-//        e.printStackTrace();
-//    }
 }
