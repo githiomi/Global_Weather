@@ -12,14 +12,17 @@ import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 import androidx.core.app.ActivityCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -48,7 +51,9 @@ import githiomi.dhosiolux.globalweather.models.ForecastItem;
 public class MainActivity extends AppCompatActivity {
 
     // Views
-    TextView date, town, weatherType, mainTemp, wind, humidity, temp;
+    CardView mainContainer;
+    ProgressBar progressBar;
+    TextView fetching, date, town, weatherType, mainTemp, wind, humidity, temp;
     ImageView weatherImage;
     RecyclerView forecastRecycler;
     RelativeLayout relativeLayout;
@@ -72,6 +77,9 @@ public class MainActivity extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
 
         // Binding views
+        progressBar = mainActivityBinding.PBFetch;
+        fetching = mainActivityBinding.TVFetch;
+        mainContainer = mainActivityBinding.mainCardView;
         date = mainActivityBinding.TVDate;
         town = mainActivityBinding.TVTownName;
         weatherImage = mainActivityBinding.IVWeatherImage;
@@ -178,6 +186,8 @@ public class MainActivity extends AppCompatActivity {
 
             Toast.makeText(MainActivity.this, "Fetched data", Toast.LENGTH_SHORT).show();
 
+            toggleView();
+
             // Clear arraylist of previous data
             forecastItemList = new ArrayList<>();
 
@@ -269,6 +279,18 @@ public class MainActivity extends AppCompatActivity {
 
         return newDate;
 
+    }
+
+    // To hide the progress bar and text, and show the card view and recycler view
+    private void toggleView(){
+
+        // Hide views
+        progressBar.setVisibility(View.GONE);
+        fetching.setVisibility(View.GONE);
+
+        // Show views
+        mainContainer.setVisibility(View.VISIBLE);
+        forecastRecycler.setVisibility(View.VISIBLE);
     }
 
     /**

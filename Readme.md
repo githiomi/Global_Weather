@@ -10,7 +10,7 @@ and methodologies.
 
 ## 👀 Application Preview
 
-![SCREENSHOT](app/src/main/res/drawable/app_screenshot.png)
+![SCREENSHOT](app/src/main/res/drawable/app_screenshot.jpg)
 
 ## ⏬ Setup/Installation Minimal Requirements
 

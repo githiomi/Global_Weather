@@ -5,17 +5,36 @@
     android:id="@+id/RL_Background"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/night_sky"
+    android:background="@color/black"
     tools:context=".MainActivity">
+
+    <TextView
+        android:id="@+id/TV_fetch"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/PB_Fetch"
+        android:layout_margin="10dp"
+        android:text="@string/data_fetch"
+        android:textAlignment="center"
+        android:textAllCaps="true"
+        android:textStyle="bold"
+        android:textColor="@color/white" />
+
+    <ProgressBar
+        android:id="@+id/PB_Fetch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true" />
 
     <!-- Card View -->
     <androidx.cardview.widget.CardView
         android:id="@+id/mainCardView"
         android:layout_width="match_parent"
         android:layout_height="550dp"
-        android:layout_marginTop="10dp"
-        app:cardBackgroundColor="@color/transparent"
         android:layout_centerInParent="true"
+        android:layout_marginTop="10dp"
+        android:visibility="gone"
+        app:cardBackgroundColor="@color/transparent"
         app:cardCornerRadius="15dp"
         app:cardElevation="15dp">
 
@@ -238,7 +257,8 @@
         android:layout_below="@id/mainCardView"
         android:layout_marginTop="10dp"
         android:background="@color/black"
-        android:padding="10dp">
+        android:padding="10dp"
+        android:visibility="gone">
 
         <!-- Forecasting goes here -->
 
