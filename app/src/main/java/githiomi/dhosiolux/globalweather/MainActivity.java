@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
     // Views
     CardView mainContainer;
     ProgressBar progressBar;
-    TextView fetching, date, town, weatherType, mainTemp, wind, humidity, temp;
+    TextView fetching, errorMessage, date, town, weatherType, mainTemp, wind, humidity, temp;
     ImageView weatherImage;
     RecyclerView forecastRecycler;
     RelativeLayout relativeLayout;
@@ -79,6 +79,7 @@ public class MainActivity extends AppCompatActivity {
         // Binding views
         progressBar = mainActivityBinding.PBFetch;
         fetching = mainActivityBinding.TVFetch;
+        errorMessage = mainActivityBinding.TVError;
         mainContainer = mainActivityBinding.mainCardView;
         date = mainActivityBinding.TVDate;
         town = mainActivityBinding.TVTownName;
@@ -249,7 +250,7 @@ public class MainActivity extends AppCompatActivity {
 
         }, error -> {
 
-            toggleView();
+            toggleError();
 
             Toast.makeText(MainActivity.this, "Could not fetch data. Check your internet connection", Toast.LENGTH_SHORT).show();
 
@@ -297,6 +298,17 @@ public class MainActivity extends AppCompatActivity {
         // Show views
         mainContainer.setVisibility(View.VISIBLE);
         forecastRecycler.setVisibility(View.VISIBLE);
+    }
+
+    // To hide the progress bar and text, and show the error message
+    private void toggleError(){
+
+        // Hide views
+        progressBar.setVisibility(View.GONE);
+        fetching.setVisibility(View.GONE);
+
+        // Show views
+        errorMessage.setVisibility(View.VISIBLE);
     }
 
     /**

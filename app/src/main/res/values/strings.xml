@@ -15,5 +15,6 @@
     <string name="humidity_percentage">0%</string>
     <string name="day_tracker">Day X</string>
     <string name="data_fetch">Fetching data. Please wait…</string>
+    <string name="data_error">Connection Error. Please try again…</string>
 
 </resources>

@@ -13,4 +13,5 @@
     <color name="transparent">@android:color/transparent</color>
     <color name="main_blue">#1b9aaa</color>
     <color name="raisin_black">#191923</color>
+    <color name="red">#F81100</color>
 </resources>

@@ -8,6 +8,7 @@
     android:background="@color/black"
     tools:context=".MainActivity">
 
+    <!-- Content Loading -->
     <TextView
         android:id="@+id/TV_fetch"
         android:layout_width="match_parent"
@@ -25,6 +26,20 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true" />
+
+    <!-- Error Message -->
+    <TextView
+        android:id="@+id/TV_error"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_margin="10dp"
+        android:text="@string/data_error"
+        android:textAlignment="center"
+        android:textAllCaps="true"
+        android:textStyle="italic"
+        android:textColor="@color/red"
+        android:visibility="gone"/>
 
     <!-- Card View -->
     <androidx.cardview.widget.CardView
