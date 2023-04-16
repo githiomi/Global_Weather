@@ -53,7 +53,7 @@ In order to enjoy the features of this application you will need to:
   desired directory.
 * Connect a physical or run a virtual device (API 33 or higher)
 * Install the application on your device of choice
-* Select the Shopping Assistant application icon.
+* Select the `Sky Sight` application icon.
 * Enjoy the Online Shopping Assistant mobile app.
 
 ## 📧 Support and contact details
