@@ -229,7 +229,7 @@ public class MainActivity extends AppCompatActivity {
                 Picasso.get().load(fullIconUrl).into(weatherImage);
 
                 // Get Forecast Data
-                for (int i = 0; i < 5; i++) {
+                for (int i = 0; i < 3; i++) {
 
                     String day = Integer.toString(i + 1);
 

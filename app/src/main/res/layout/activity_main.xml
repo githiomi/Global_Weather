@@ -37,7 +37,7 @@
         android:text="@string/data_error"
         android:textAlignment="center"
         android:textAllCaps="true"
-        android:textStyle="italic"
+        android:textStyle="bold"
         android:textColor="@color/red"
         android:visibility="gone"/>
 
